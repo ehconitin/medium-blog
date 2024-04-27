@@ -5,6 +5,17 @@ import { useBlogs } from "../hooks";
 
 const Blogs = () => {
   const { loading, blogs } = useBlogs();
+  function convertDateTime(timestamp: string) {
+    const date = new Date(timestamp);
+    const options = {
+      month: "short" as const,
+      day: "2-digit" as const,
+      year: "numeric" as const,
+    };
+    const localDateString = date.toLocaleString(undefined, options);
+
+    return localDateString;
+  }
   if (loading) {
     return (
       <div>
@@ -33,7 +44,7 @@ const Blogs = () => {
               authorName={blog.author.name || "Anonymous"}
               title={blog.title}
               content={blog.content}
-              publishedDate="2nd Feb 2024"
+              publishedDate={convertDateTime(blog.publishedDate)}
             />
           ))}
         </div>

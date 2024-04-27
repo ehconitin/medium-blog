@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
+import AvatarDropDown from "./AvatarDropDown";
+import { useGetUser } from "../hooks";
+import { useState } from "react";
 
 const AppBar = () => {
+  const { user } = useGetUser();
+  const [showDropDown, setShowDropDown] = useState<boolean>(false);
+
   return (
-    <div className="border-b flex justify-between px-10 py-4">
+    <div className="static border-b flex justify-between px-10 py-4">
       <Link to={"/blogs"} className="flex justify-center flex-col">
         Medium
       </Link>
@@ -16,7 +22,25 @@ const AppBar = () => {
             New
           </button>
         </Link>
-        <Avatar name="Nitin" size="big" />
+        <button
+          onClick={() => {
+            setShowDropDown(!showDropDown);
+            console.log(showDropDown);
+          }}
+          type="button"
+        >
+          {" "}
+          {user ? (
+            <Avatar name={user.name} size="big" />
+          ) : (
+            <Avatar name="!" size="big" />
+          )}
+          {showDropDown && user ? (
+            <div className="absolute top-16 right-4">
+              <AvatarDropDown user={user} />
+            </div>
+          ) : null}
+        </button>
       </div>
     </div>
   );

@@ -80,3 +80,35 @@ userRouter.post("/signin", async (c) => {
     jwt: token,
   });
 });
+
+userRouter.get("/me", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  const header = c.req.header("authorization");
+  if (!header || !header.startsWith("Bearer ")) {
+    c.status(403);
+    return c.json({
+      error: "Unauthorized or no token detected",
+    });
+  }
+  const token = header.split(" ")[1];
+  const response = await verify(token, c.env.JWT_SECRET);
+
+  if (response.id) {
+    const details = await prisma.user.findFirst({
+      where: {
+        id: response.id,
+      },
+      select: {
+        name: true,
+        id: true,
+        email: true,
+      },
+    });
+    return c.json({ details });
+  } else {
+    c.status(403);
+    return c.json({ error: "Unauthorized" });
+  }
+});

@@ -94,6 +94,7 @@ blogRouter.get("/bulk", async (c) => {
           name: true,
         },
       },
+      publishedDate: true,
     },
   });
 
@@ -135,6 +136,7 @@ blogRouter.get("/:id", async (c) => {
           name: true,
         },
       },
+      publishedDate: true,
     },
   });
   return c.json({

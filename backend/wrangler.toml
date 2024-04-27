@@ -2,8 +2,8 @@ name = "blog-backend"
 compatibility_date = "2023-12-01"
 
 [vars]
-DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiNmU3MDI2NjQtZDAyMi00NTI3LTk4NTktODNkNTgwYzg1ZmQwIiwidGVuYW50X2lkIjoiMjA5ZWRhZDdlNmNhYWMxMTk3YjFkMTlkODQyMTA5NmVhMzUyMzZhOTZmZDFhYTVkYTVmZTkzODM1OTNmMGRiOSIsImludGVybmFsX3NlY3JldCI6ImZmZjJkN2E0LWE5YTktNDhjMy1iODc0LTVkMTI1ZTA0YjM2NyJ9.HBUwKQxJOod3ZJtNc-gEMbCGdlTJEK99i1h0Cqr2L9U"
-JWT_SECRET="secretpassword"
+DATABASE_URL=""
+JWT_SECRET=""
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"
 # id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"

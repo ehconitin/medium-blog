@@ -3,6 +3,17 @@ import AppBar from "./AppBar";
 import Avatar from "./Avatar";
 
 const FullBlog = ({ blog }: { blog: Blog }) => {
+  function convertDateTime(timestamp: string) {
+    const date = new Date(timestamp);
+    const options = {
+      month: "short" as const,
+      day: "2-digit" as const,
+      year: "numeric" as const,
+    };
+    const localDateString = date.toLocaleString(undefined, options);
+
+    return localDateString;
+  }
   return (
     <div>
       <AppBar />
@@ -12,7 +23,7 @@ const FullBlog = ({ blog }: { blog: Blog }) => {
             <div className="text-5xl font-extrabold">{blog.title}</div>
             <div className="text-slate-500 pt-2">
               {" "}
-              Posted on 2nd December 2023
+              {convertDateTime(blog.publishedDate)}
             </div>
             <div className="pt-4">{blog.content}</div>
           </div>
