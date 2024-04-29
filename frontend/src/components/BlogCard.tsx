@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BlogOptionsDropDown from "./BlogOptionsDropDown";
 
 interface BlogCardProps {
