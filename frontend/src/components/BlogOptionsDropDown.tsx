@@ -26,7 +26,7 @@ const BlogOptionsDropDown = ({
         <li>
           <a
             onClick={() => {
-              navigate("/myblogs");
+              navigate(`/updateBlog/${id}`);
             }}
             className="block px-4 py-2 hover:bg-gray-100 "
           >

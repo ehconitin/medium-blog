@@ -65,7 +65,7 @@ blogRouter.post("/", async (c) => {
   });
 });
 
-blogRouter.put("/", async (c) => {
+blogRouter.put("/:id", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
@@ -117,7 +117,8 @@ blogRouter.get("/bulk", async (c) => {
 
   response.sort(
     (a, b) =>
-      new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime()
+      Date.parse(b.publishedDate.toString()) -
+      Date.parse(a.publishedDate.toString())
   );
 
   return c.json({

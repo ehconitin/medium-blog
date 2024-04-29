@@ -2,8 +2,10 @@ import { ChangeEvent } from "react";
 
 const TextEditor = ({
   onChange,
+  defaultValue,
 }: {
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  defaultValue?: string;
 }) => {
   return (
     <form>
@@ -12,6 +14,7 @@ const TextEditor = ({
           <div className=" bg-white rounded-b-lg w-full">
             <label className="sr-only">Publish post</label>
             <textarea
+              defaultValue={defaultValue}
               onChange={onChange}
               id="editor"
               rows={8}

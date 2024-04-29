@@ -6,6 +6,7 @@ import Blogs from "./pages/Blogs";
 import Publish from "./pages/Publish";
 import MyBlogs from "./pages/MyBlogs";
 import Bio from "./pages/Bio";
+import UpdateBlog from "./pages/UpdateBlog";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/publish" element={<Publish />} />
           <Route path="/myblogs" element={<MyBlogs />} />
           <Route path="/bio" element={<Bio />} />
+          <Route path="/updateBlog/:id" element={<UpdateBlog />} />
         </Routes>
       </BrowserRouter>
     </>
