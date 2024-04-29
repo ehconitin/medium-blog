@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { Prisma, PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { verify } from "hono/jwt";
+import { createBlogInput, updateBlogInput } from "@ehco/blog-common";
 
 export const blogRouter = new Hono<{
   Bindings: {
@@ -12,6 +13,7 @@ export const blogRouter = new Hono<{
     userId: string;
   };
 }>();
+
 blogRouter.use("*", async (c, next) => {
   const header = c.req.header("authorization");
   if (!header || !header.startsWith("Bearer ")) {
@@ -37,6 +39,14 @@ blogRouter.post("/", async (c) => {
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
   const body = await c.req.json();
+  const { success } = createBlogInput.safeParse(body);
+  console.log(success);
+  if (!success) {
+    return c.json({
+      error: "Invalid inputs",
+    });
+  }
+
   const response = await prisma.post.create({
     data: {
       title: body.title,
@@ -60,6 +70,13 @@ blogRouter.put("/", async (c) => {
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
   const body = await c.req.json();
+  const { success } = updateBlogInput.safeParse(body);
+  console.log(success);
+  if (!success) {
+    return c.json({
+      error: "Invalid inputs",
+    });
+  }
   const response = await prisma.post.update({
     where: {
       id: body.id,
@@ -98,6 +115,11 @@ blogRouter.get("/bulk", async (c) => {
     },
   });
 
+  response.sort(
+    (a, b) =>
+      new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime()
+  );
+
   return c.json({
     response,
   });
@@ -111,6 +133,31 @@ blogRouter.delete("/delete/:id", async (c) => {
   const response = await prisma.post.delete({
     where: {
       id: deleteId,
+    },
+  });
+  return c.json({
+    response,
+  });
+});
+
+blogRouter.get("/mine", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  const response = await prisma.post.findMany({
+    where: {
+      authorId: c.get("userId"),
+    },
+    select: {
+      title: true,
+      content: true,
+      id: true,
+      author: {
+        select: {
+          name: true,
+        },
+      },
+      publishedDate: true,
     },
   });
   return c.json({
@@ -134,6 +181,7 @@ blogRouter.get("/:id", async (c) => {
       author: {
         select: {
           name: true,
+          bio: true,
         },
       },
       publishedDate: true,

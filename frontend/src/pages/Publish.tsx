@@ -29,27 +29,31 @@ const Publish = () => {
           />
           <button
             onClick={() => {
-              axios
-                .post(
-                  `${BACKEND_URL}/api/v1/blog`,
-                  {
-                    title,
-                    content,
-                  },
-                  {
-                    headers: {
-                      Authorization: localStorage.getItem("token"),
+              if (title && content) {
+                axios
+                  .post(
+                    `${BACKEND_URL}/api/v1/blog`,
+                    {
+                      title,
+                      content,
                     },
-                  }
-                )
-                .then((response) => {
-                  navigate(`/blog/${response.data.response.id}`);
-                });
+                    {
+                      headers: {
+                        Authorization: localStorage.getItem("token"),
+                      },
+                    }
+                  )
+                  .then((response) => {
+                    navigate(`/blog/${response.data.response.id}`);
+                  });
+              } else {
+                alert("Title or content can not be empty");
+              }
             }}
             type="submit"
-            className="mt-4 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 "
+            className="mt-4 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-green-200 "
           >
-            Publish post
+            Publish
           </button>
         </div>
       </div>

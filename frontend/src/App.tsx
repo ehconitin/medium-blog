@@ -4,6 +4,8 @@ import Signup from "./pages/Signup";
 import Blog from "./pages/Blog";
 import Blogs from "./pages/Blogs";
 import Publish from "./pages/Publish";
+import MyBlogs from "./pages/MyBlogs";
+import Bio from "./pages/Bio";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
           <Route path="/blog/:id" element={<Blog />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/publish" element={<Publish />} />
+          <Route path="/myblogs" element={<MyBlogs />} />
+          <Route path="/bio" element={<Bio />} />
         </Routes>
       </BrowserRouter>
     </>

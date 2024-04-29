@@ -1,10 +1,10 @@
 import AppBar from "../components/AppBar";
 import BlogCard from "../components/BlogCard";
 import BlogSkeleton from "../components/BlogSkeleton";
-import { useBlogs } from "../hooks";
+import { useGetMyBlogs } from "../hooks";
 
-const Blogs = () => {
-  const { loading, blogs } = useBlogs();
+const MyBlogs = () => {
+  const { loading, blogs } = useGetMyBlogs();
   function convertDateTime(timestamp: string) {
     const date = new Date(timestamp);
     const options = {
@@ -40,13 +40,12 @@ const Blogs = () => {
         <div className=" ">
           {blogs.map((blog) => (
             <BlogCard
-              key={blog.id}
               id={blog.id}
               authorName={blog.author.name || "Anonymous"}
               title={blog.title}
               content={blog.content}
               publishedDate={convertDateTime(blog.publishedDate)}
-              editButton={false}
+              editButton={true}
             />
           ))}
         </div>
@@ -55,4 +54,4 @@ const Blogs = () => {
   );
 };
 
-export default Blogs;
+export default MyBlogs;

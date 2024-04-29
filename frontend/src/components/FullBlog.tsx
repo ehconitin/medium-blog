@@ -39,10 +39,7 @@ const FullBlog = ({ blog }: { blog: Blog }) => {
                 <div className="text-xl font-bold">
                   {blog.author.name || "Anonymous"}
                 </div>
-                <div className="pt-2 text-slate-500">
-                  Random catch phrase about the authors ability to grab the
-                  users attention
-                </div>
+                <div className="pt-2 text-slate-500">{blog.author.bio}</div>
               </div>
             </div>
           </div>

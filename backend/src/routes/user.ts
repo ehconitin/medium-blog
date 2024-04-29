@@ -81,10 +81,7 @@ userRouter.post("/signin", async (c) => {
   });
 });
 
-userRouter.get("/me", async (c) => {
-  const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL,
-  }).$extends(withAccelerate());
+userRouter.use("*", async (c, next) => {
   const header = c.req.header("authorization");
   if (!header || !header.startsWith("Bearer ")) {
     c.status(403);
@@ -96,14 +93,50 @@ userRouter.get("/me", async (c) => {
   const response = await verify(token, c.env.JWT_SECRET);
 
   if (response.id) {
+    c.set("userId", response.id);
+    await next();
+  } else {
+    c.status(403);
+    return c.json({ error: "Unauthorized" });
+  }
+});
+
+userRouter.put("/bio", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  const body = await c.req.json();
+  const response = await prisma.user.update({
+    where: {
+      id: c.get("userId"),
+    },
+    data: {
+      bio: body.bio,
+    },
+    select: {
+      bio: true,
+    },
+  });
+  return c.json({
+    response,
+  });
+});
+
+userRouter.get("/me", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  if (c.get("userId")) {
     const details = await prisma.user.findFirst({
       where: {
-        id: response.id,
+        id: c.get("userId"),
       },
       select: {
         name: true,
         id: true,
         email: true,
+        bio: true,
       },
     });
     return c.json({ details });

@@ -1,17 +1,24 @@
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { User } from "../hooks";
+import { BACKEND_URL } from "../config";
 
-const AvatarDropDown = ({ user }: { user: User }) => {
+interface BlogOptionsDropDownProps {
+  id: string;
+  isVisible: boolean;
+  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const BlogOptionsDropDown = ({
+  id,
+
+  setIsVisible,
+}: BlogOptionsDropDownProps) => {
   const navigate = useNavigate();
   return (
     <div
       id="dropdownAvatar"
       className="z-10  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 "
     >
-      <div className="px-4 py-3 text-sm text-gray-900 cursor-default">
-        <div>{user.name}</div>
-        <div className="font-medium truncate">{user.email}</div>
-      </div>
       <ul
         className="py-2 text-sm text-gray-700"
         aria-labelledby="dropdownUserAvatarButton"
@@ -23,38 +30,40 @@ const AvatarDropDown = ({ user }: { user: User }) => {
             }}
             className="block px-4 py-2 hover:bg-gray-100 "
           >
-            My blogs
-          </a>
-        </li>
-        <li>
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100 ">
-            Update profile
+            Edit
           </a>
         </li>
         <li>
           <a
             onClick={() => {
-              navigate("/bio");
+              axios
+                .delete(`${BACKEND_URL}/api/v1/blog/delete/${id}`, {
+                  headers: { Authorization: localStorage.getItem("token") },
+                })
+                .then(() => {
+                  alert("Blog deleted");
+
+                  navigate(0);
+                });
             }}
             className="block px-4 py-2 hover:bg-gray-100 "
           >
-            Change Bio
+            Delete
           </a>
         </li>
       </ul>
       <div className="py-2">
         <a
           onClick={() => {
-            localStorage.removeItem("token");
-            navigate("/signin");
+            setIsVisible(false);
           }}
           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
         >
-          Sign out
+          Close
         </a>
       </div>
     </div>
   );
 };
 
-export default AvatarDropDown;
+export default BlogOptionsDropDown;
