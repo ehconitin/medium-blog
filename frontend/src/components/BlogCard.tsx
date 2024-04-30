@@ -61,7 +61,7 @@ const BlogCard = ({
           </div>
         ) : null}
         {isVisible === true ? (
-          <div className="absolute mt-6 left-[1200px]">
+          <div className="absolute mt-6 right-8 lg:right-96">
             <BlogOptionsDropDown
               id={id}
               isVisible={isVisible}

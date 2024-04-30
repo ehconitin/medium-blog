@@ -13,7 +13,7 @@ const Publish = () => {
     <div>
       <AppBar />
       <div className="flex justify-center w-full pt-8">
-        <div className="max-w-screen-lg w-full">
+        <div className="max-w-screen-lg w-full p-8 lg:p-0">
           <input
             onChange={(e) => {
               setTitle(e.target.value);

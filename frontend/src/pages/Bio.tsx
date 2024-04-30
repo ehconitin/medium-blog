@@ -13,7 +13,7 @@ const Bio = () => {
     <div>
       <AppBar />
       <div className="h-screen flex flex-col justify-center  ">
-        <div className="flex justify-center mb-44">
+        <div className="flex justify-center mb-[400px] lg:mb-44 p-8 lg:p-0">
           <div className="max-w-screen-lg w-full">
             <input
               onChange={(e) => {
