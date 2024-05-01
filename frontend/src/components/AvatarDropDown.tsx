@@ -27,7 +27,12 @@ const AvatarDropDown = ({ user }: { user: User }) => {
           </a>
         </li>
         {/* <li>
-          <a href="#" className="block px-4 py-2 hover:bg-gray-100 ">
+          <a
+            onClick={() => {
+              navigate("/updateUser");
+            }}
+            className="block px-4 py-2 hover:bg-gray-100 "
+          >
             Update profile
           </a>
         </li> */}

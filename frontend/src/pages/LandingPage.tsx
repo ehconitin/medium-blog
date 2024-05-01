@@ -31,11 +31,11 @@ const LandingPage = () => {
     return (
       <div>
         <AppBar type="landing" />
-        <div className="flex justify-center flex-col  h-[822px] bg-gray-900">
-          <div className="text-5xl font-extrabold flex justify-center text-white">
+        <div className="flex justify-center flex-col h-[750px] lg:h-[830px]  bg-gray-900">
+          <div className="text-5xl font-extrabold flex justify-center text-white  text-center">
             Unleash Your Creativity
           </div>
-          <div className="flex justify-center pt-8 text-white">
+          <div className="flex justify-center pt-8 text-white text-center px-4 lg:px-0">
             Discover a platform that empowers your voice and connects you with a
             community of passionate writers
           </div>
