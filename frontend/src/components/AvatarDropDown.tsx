@@ -26,11 +26,11 @@ const AvatarDropDown = ({ user }: { user: User }) => {
             My blogs
           </a>
         </li>
-        <li>
+        {/* <li>
           <a href="#" className="block px-4 py-2 hover:bg-gray-100 ">
             Update profile
           </a>
-        </li>
+        </li> */}
         <li>
           <a
             onClick={() => {
@@ -46,7 +46,7 @@ const AvatarDropDown = ({ user }: { user: User }) => {
         <a
           onClick={() => {
             localStorage.removeItem("token");
-            navigate("/signin");
+            navigate("/");
           }}
           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
         >

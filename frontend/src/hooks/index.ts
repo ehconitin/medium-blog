@@ -65,6 +65,7 @@ export const useBlog = ({ id }: { id: string }) => {
 
 export const useGetUser = () => {
   const [user, setUser] = useState<User>();
+
   useEffect(() => {
     try {
       axios
@@ -73,6 +74,9 @@ export const useGetUser = () => {
         })
         .then((response) => {
           setUser(response.data.details);
+        })
+        .catch((e) => {
+          console.log(e);
         });
     } catch (error) {
       console.log("error101");
@@ -101,5 +105,29 @@ export const useGetMyBlogs = () => {
   return {
     loading,
     blogs,
+  };
+};
+
+export const useUserLoggedIn = () => {
+  const [exists, setExists] = useState(true);
+  useEffect(() => {
+    try {
+      axios
+        .get(`${BACKEND_URL}/api/v1/user/me`, {
+          headers: { Authorization: localStorage.getItem("token") },
+        })
+        .then(() => {
+          setExists(true);
+        })
+        .catch((e) => {
+          console.log(e);
+          setExists(false);
+        });
+    } catch (error) {
+      console.log("error101");
+    }
+  }, []);
+  return {
+    exists,
   };
 };

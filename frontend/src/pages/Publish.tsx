@@ -2,13 +2,21 @@ import axios from "axios";
 import AppBar from "../components/AppBar";
 import TextEditor from "../components/TextEditor";
 import { BACKEND_URL } from "../config";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUserLoggedIn } from "../hooks";
 
 const Publish = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const { exists } = useUserLoggedIn();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (!exists) {
+      navigate("/");
+    }
+  }, [exists, navigate]);
+
   return (
     <div>
       <AppBar />

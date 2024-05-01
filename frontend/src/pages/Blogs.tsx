@@ -1,10 +1,21 @@
+import { useNavigate } from "react-router-dom";
 import AppBar from "../components/AppBar";
 import BlogCard from "../components/BlogCard";
 import BlogSkeleton from "../components/BlogSkeleton";
-import { useBlogs } from "../hooks";
+import { useBlogs, useUserLoggedIn } from "../hooks";
+import { useEffect } from "react";
 
 const Blogs = () => {
+  const { exists } = useUserLoggedIn();
+
   const { loading, blogs } = useBlogs();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!exists) {
+      navigate("/");
+    }
+  }, [exists, navigate]);
+
   function convertDateTime(timestamp: string) {
     const date = new Date(timestamp);
     const options = {
@@ -16,6 +27,7 @@ const Blogs = () => {
 
     return localDateString;
   }
+
   if (loading) {
     return (
       <div>
@@ -33,6 +45,7 @@ const Blogs = () => {
       </div>
     );
   }
+
   return (
     <div>
       <AppBar />

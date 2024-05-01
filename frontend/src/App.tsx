@@ -7,12 +7,14 @@ import Publish from "./pages/Publish";
 import MyBlogs from "./pages/MyBlogs";
 import Bio from "./pages/Bio";
 import UpdateBlog from "./pages/UpdateBlog";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<LandingPage />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/blog/:id" element={<Blog />} />

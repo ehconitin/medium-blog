@@ -2,13 +2,20 @@ import axios from "axios";
 import AppBar from "../components/AppBar";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useGetUser } from "../hooks";
+import { useEffect, useState } from "react";
+import { useGetUser, useUserLoggedIn } from "../hooks";
 
 const Bio = () => {
   const navigate = useNavigate();
   const [bio, setBio] = useState("");
   const { user } = useGetUser();
+  const { exists } = useUserLoggedIn();
+
+  useEffect(() => {
+    if (!exists) {
+      navigate("/");
+    }
+  }, [exists, navigate]);
   return (
     <div>
       <AppBar />

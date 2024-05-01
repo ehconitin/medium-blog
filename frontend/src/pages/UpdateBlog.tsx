@@ -1,18 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppBar from "../components/AppBar";
 import { useNavigate, useParams } from "react-router-dom";
 import TextEditor from "../components/TextEditor";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
-import { useBlog } from "../hooks";
+import { useBlog, useUserLoggedIn } from "../hooks";
 
 const UpdateBlog = () => {
   const { id } = useParams();
   const { blog } = useBlog({ id: id || "" });
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
+  const { exists } = useUserLoggedIn();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (!exists) {
+      navigate("/");
+    }
+  }, [exists, navigate]);
+
   return (
     <div>
       <AppBar />

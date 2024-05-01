@@ -1,10 +1,19 @@
+import { useNavigate } from "react-router-dom";
 import AppBar from "../components/AppBar";
 import BlogCard from "../components/BlogCard";
 import BlogSkeleton from "../components/BlogSkeleton";
-import { useGetMyBlogs } from "../hooks";
+import { useGetMyBlogs, useUserLoggedIn } from "../hooks";
+import { useEffect } from "react";
 
 const MyBlogs = () => {
   const { loading, blogs } = useGetMyBlogs();
+  const { exists } = useUserLoggedIn();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!exists) {
+      navigate("/");
+    }
+  }, [exists, navigate]);
   function convertDateTime(timestamp: string) {
     const date = new Date(timestamp);
     const options = {

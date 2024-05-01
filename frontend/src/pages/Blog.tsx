@@ -1,12 +1,20 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import FullBlog from "../components/FullBlog";
-import { useBlog } from "../hooks";
+import { useBlog, useUserLoggedIn } from "../hooks";
 import Spinner from "../components/Spinner";
 import AppBar from "../components/AppBar";
+import { useEffect } from "react";
 
 const Blog = () => {
   const { id } = useParams();
   const { loading, blog } = useBlog({ id: id || "" });
+  const { exists } = useUserLoggedIn();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!exists) {
+      navigate("/");
+    }
+  }, [exists, navigate]);
   if (loading || !blog) {
     return (
       <div>
