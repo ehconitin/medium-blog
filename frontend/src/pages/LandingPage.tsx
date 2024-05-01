@@ -29,9 +29,9 @@ const LandingPage = () => {
     navigate("/blogs");
   } else {
     return (
-      <div>
+      <div className="flex flex-col h-screen">
         <AppBar type="landing" />
-        <div className="flex justify-center flex-col h-[750px] lg:h-[830px]  bg-gray-900">
+        <div className="flex-grow justify-center  bg-gray-900 pt-64">
           <div className="text-5xl font-extrabold flex justify-center text-white  text-center">
             Unleash Your Creativity
           </div>
